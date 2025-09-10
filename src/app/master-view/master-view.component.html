@@ -1,0 +1,79 @@
+<div class="column-layout group">
+  <h5 class="h5">
+    Sales By Year and Category
+  </h5>
+  <div class="row-layout group_1">
+    <iab-query-builder class="query-builder"></iab-query-builder>
+    <igx-select type="border" [(ngModel)]="categoryName" class="select">
+      <igx-select-item value="Produce">
+        Produce
+      </igx-select-item>
+      <igx-select-item value="Seafood">
+        Seafood
+      </igx-select-item>
+      <igx-select-item value="Condiments">
+        Condiments
+      </igx-select-item>
+      <igx-select-item value="Beverages">
+        Beverages
+      </igx-select-item>
+      <igx-select-item value="Confections">
+        Confections
+      </igx-select-item>
+      <igx-select-item value="Dairy Products">
+        Dairy Products
+      </igx-select-item>
+      <label igxLabel>Label/Placeholder</label>
+    </igx-select>
+  </div>
+  <div class="row-layout group_2">
+    <igx-pivot-grid [data]="salesAfterYear" [superCompactMode]="true" [defaultExpandState]="true" [autoGenerateConfig]="true" #pivotGrid class="pivot-grid"></igx-pivot-grid>
+    <igx-pivot-data-selector [grid]="pivotGrid"></igx-pivot-data-selector>
+  </div>
+  <igx-tabs class="tabs">
+    <igx-tab-item [selected]="true" class="tab-item">
+      <igx-tab-header>
+        <igx-icon igxTabHeaderIcon>
+          info
+        </igx-icon>
+        <span igxTabHeaderLabel>Grid</span>
+      </igx-tab-header>
+      <igx-tab-content class="row-layout tab-item-content">
+        <igx-grid [data]="salesAfterYear" primaryKey="orderId" [allowFiltering]="true" filterMode="excelStyleFilter" class="grid">
+          <igx-column field="orderId" oldDataType="number" header="orderId" [filterable]="true" [sortable]="true" [selectable]="false"></igx-column>
+          <igx-column field="productId" oldDataType="number" header="productId" [filterable]="true" [sortable]="true" [selectable]="false"></igx-column>
+          <igx-column field="unitPrice" oldDataType="number" header="unitPrice" [filterable]="true" [sortable]="true" [selectable]="false"></igx-column>
+          <igx-column field="quantity" oldDataType="number" header="quantity" [filterable]="true" [sortable]="true" [selectable]="false"></igx-column>
+          <igx-column field="discount" oldDataType="number" header="discount" [filterable]="true" [sortable]="true" [selectable]="false"></igx-column>
+        </igx-grid>
+      </igx-tab-content>
+    </igx-tab-item>
+    <igx-tab-item class="tab-item">
+      <igx-tab-header>
+        <igx-icon igxTabHeaderIcon>
+          info
+        </igx-icon>
+        <span igxTabHeaderLabel>[ ] of Cards</span>
+      </igx-tab-header>
+      <igx-tab-content class="row-layout tab-item-content">
+        @for (item of salesAfterYear; track item) {
+          <igx-card class="card">
+            <igx-card-header>
+              <h3 igxCardHeaderTitle>
+                {{ item.orderId }}
+              </h3>
+              <h5 igxCardHeaderSubtitle>
+                {{ item.quantity }}
+              </h5>
+            </igx-card-header>
+            <igx-card-content class="body-content">
+              <h5 class="h5">
+                {{ item.unitPrice }}
+              </h5>
+            </igx-card-content>
+          </igx-card>
+        }
+      </igx-tab-content>
+    </igx-tab-item>
+  </igx-tabs>
+</div>
